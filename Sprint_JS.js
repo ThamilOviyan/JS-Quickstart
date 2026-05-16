@@ -38,11 +38,11 @@ navigator.mediaDevices.getUserMedia(constraints)
         if(!recorder) return;
 
         recordFlag = !recordFlag;
-        if(recordFlag){ // start
+        if(recordFlag){
             recorder.start();
             recordBtn.classList.add("scale-record");
             startTimer();
-        }else{//stop
+        }else{
                 recorder.stop();
                 recordBtn.classList.remove("scale-record");
                 stopTimer();
@@ -51,7 +51,7 @@ navigator.mediaDevices.getUserMedia(constraints)
 });
 
 captureBtnCont.addEventListener("click",(e)=>{
-    captureBtnCont.classList.add("scale-capture");// adding animations
+    captureBtnCont.classList.add("scale-capture");
 
     let canvas = document.createElement("canvas");
     canvas.width = video.videoWidth;
@@ -60,7 +60,7 @@ captureBtnCont.addEventListener("click",(e)=>{
 
     let tool = canvas.getContext("2d");
     tool.drawImage(video,0,0,canvas.width,canvas.height);
-    //Filtering
+
     tool.fillStyle = transparentColor;
     tool.fillRect(0,0,canvas.width,canvas.height);
 
@@ -70,13 +70,11 @@ captureBtnCont.addEventListener("click",(e)=>{
     a.download = "Image.jpeg";
     a.click();
 
-    //remove animations
     setTimeout(()=>{
         captureBtn.classList.remove("scale-capture");
     },500);
 })
 
-//filtering logic
 let filter = document.querySelector(".filter-layer");
 
 let allFilter = document.querySelectorAll(".filter");
@@ -89,7 +87,7 @@ allFilter.forEach((filterElem)=>{
 
 
 let timerID;
-let counter = 0;// Total Seconds
+let counter = 0;
 let timer = document.querySelector(".timer");
 function startTimer(){
     timer.style.display = "block";
@@ -109,30 +107,10 @@ function startTimer(){
        
         counter++;
     }
-    timerID= setInterval(displayTimer,1000);//Calling function displayTimer()
+    timerID= setInterval(displayTimer,1000);
 }
 function stopTimer(){
     clearInterval(timerID);
     timer.innerText = "00:00:00";
     timer.style.display="none";
 }
-
-
-
-/*
-            How to caluculate the time is that
-            1) Initialize a variable that actually stores no.of seconds
-            2) when ever this function displayTimer is called then we need to increment the
-             counter variable , as each call of this function is considered as
-             1sec in regular time. Why? because we need to get the actual time when
-             this thing needs counted.
-            How to count Hours, Minutes & Seconds?
-            counter = 3725
-            we know 1hr = 3600 seconds ,
-            to count 1hr using counter value, we use '/(division operator)' btw 
-            counter and 3600 sec. division operator is used to perform floor divison
-            3725/3600 = >1
-            remainder 3725%3600 =>no.of minutes in seconds , so we need to convert back
-            to minutes, 1minute = 60seconds
-        
-        */
